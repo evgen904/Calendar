@@ -1,130 +1,119 @@
 <template>
-    <td
-            class="day"
-            :class="{
+  <td
+    class="day"
+    :class="{
       active: isActive,
       select: isSelect,
       'current-date': isCurrentDate
     }"
-    >
+  >
+    <div>
         {{ date }}
-    </td>
+    </div>
+  </td>
 </template>
 
 <script>
-    export default {
-        name: "Day",
-        components: {},
-        props: {
-            dateMonth: {
-                type: Date,
-                required: true
-            },
-            date: {
-                type: Number,
-                required: true
-            }
-        },
-        computed: {
-            dateIn() {
-                return this.$parent.$parent.dateIn;
-            },
-            dateOut() {
-                return this.$parent.$parent.dateOut;
-            },
-            dateSingle() {
-                return this.$parent.$parent.dateSingle;
-            },
-            timeCurrentDay() {
-                return new Date(
-                    this.dateMonth.getFullYear(),
-                    this.dateMonth.getMonth(),
-                    this.date
-                );
-            },
-            isActive() {
-                // Если выбрана левая часть
-                let isLeft =
-                    this.dateIn &&
-                    this.timeCurrentDay.getFullYear() == this.dateIn.getFullYear() &&
-                    this.timeCurrentDay.getMonth() == this.dateIn.getMonth() &&
-                    this.timeCurrentDay.getDate() == this.dateIn.getDate()
-                // Если выбрана как правая часть
-                let isRight =
-                    this.dateOut &&
-                    this.timeCurrentDay.getFullYear() == this.dateOut.getFullYear() &&
-                    this.timeCurrentDay.getMonth() == this.dateOut.getMonth() &&
-                    this.timeCurrentDay.getDate() == this.dateOut.getDate()
-                let isSingle =
-                    this.dateSingle &&
-                    this.timeCurrentDay.getFullYear() == this.dateSingle.getFullYear() &&
-                    this.timeCurrentDay.getMonth() == this.dateSingle.getMonth() &&
-                    this.timeCurrentDay.getDate() == this.dateSingle.getDate()
-                return isLeft || isRight || isSingle;
-            },
-            isSelect() {
-                //  Если дата правее выбраной левой части
-                let isLeft =
-                    this.dateIn && this.timeCurrentDay.getTime() >= this.dateIn.getTime();
-                // Если дата левее выбраной правой части
-                let isRight =
-                    this.dateOut && this.timeCurrentDay.getTime() < this.dateOut.getTime();
-                return isLeft && isRight;
-            },
-            isCurrentDate() {
-                let toDay = new Date();
-                return (
-                    this.timeCurrentDay.getFullYear() == toDay.getFullYear() &&
-                    this.timeCurrentDay.getMonth() == toDay.getMonth() &&
-                    this.timeCurrentDay.getDate() == toDay.getDate()
-                );
-            }
-        }
-    };
+export default {
+  name: "Day",
+  components: {},
+  props: {
+    dateMonth: {
+      type: Date,
+      required: true
+    },
+    date: {
+      type: Number,
+      required: true
+    }
+  },
+  computed: {
+    dateIn() {
+      return this.$parent.$parent.dateIn;
+    },
+    dateOut() {
+      return this.$parent.$parent.dateOut;
+    },
+    dateSingle() {
+      return this.$parent.$parent.dateSingle;
+    },
+    timeCurrentDay() {
+      return new Date(
+        this.dateMonth.getFullYear(),
+        this.dateMonth.getMonth(),
+        this.date
+      );
+    },
+    isActive() {
+      // Если выбрана левая часть
+      let isLeft =
+        this.dateIn &&
+        this.timeCurrentDay.getFullYear() == this.dateIn.getFullYear() &&
+        this.timeCurrentDay.getMonth() == this.dateIn.getMonth() &&
+        this.timeCurrentDay.getDate() == this.dateIn.getDate();
+      // Если выбрана как правая часть
+      let isRight =
+        this.dateOut &&
+        this.timeCurrentDay.getFullYear() == this.dateOut.getFullYear() &&
+        this.timeCurrentDay.getMonth() == this.dateOut.getMonth() &&
+        this.timeCurrentDay.getDate() == this.dateOut.getDate();
+      let isSingle =
+        this.dateSingle &&
+        this.timeCurrentDay.getFullYear() == this.dateSingle.getFullYear() &&
+        this.timeCurrentDay.getMonth() == this.dateSingle.getMonth() &&
+        this.timeCurrentDay.getDate() == this.dateSingle.getDate();
+      return isLeft || isRight || isSingle;
+    },
+    isSelect() {
+      //  Если дата правее выбраной левой части
+      let isLeft =
+        this.dateIn && this.timeCurrentDay.getTime() >= this.dateIn.getTime();
+      // Если дата левее выбраной правой части
+      let isRight =
+        this.dateOut && this.timeCurrentDay.getTime() < this.dateOut.getTime();
+      return isLeft && isRight;
+    },
+    isCurrentDate() {
+      let toDay = new Date();
+      return (
+        this.timeCurrentDay.getFullYear() == toDay.getFullYear() &&
+        this.timeCurrentDay.getMonth() == toDay.getMonth() &&
+        this.timeCurrentDay.getDate() == toDay.getDate()
+      );
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-    .day {
-        text-align: center;
+.day {
+  box-sizing: border-box;
+  vertical-align: middle;
+    border-collapse: collapse;
+    border-spacing: 0;
+    padding: 0;
+    margin: 0;
+    > div {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-end;
         font-size: 14px;
-        width: 38px;
-        height: 38px;
-        cursor: pointer;
-        border: 1px solid rgb(228, 231, 231);
-        box-sizing: border-box;
-        vertical-align: middle;
+        color: #444444;
+        border: 1px solid #D8D8D8;
         background: #fff;
-        &.disabled {
-            pointer-events: none;
-            opacity: 0.25;
-        }
-        &.select {
-            background-color: rgb(208, 231, 253);
-            border-color: rgb(208, 231, 253);
-        }
-        &.active {
-            background-color: rgb(111, 167, 89);
-            color: white;
-            border-color: rgb(111, 167, 89);
-        }
-        &:hover {
-            background-color: rgba(111, 167, 89, 0.75);
-            color: white;
-            border-color: rgba(111, 167, 89, 0.75);
-        }
-        &.current-date {
-            position: relative;
-            &:before {
-                position: absolute;
-                content: "";
-                display: block;
-                width: calc(100% + 1px);
-                height: calc(100% + 1px);
-                top: 0;
-                left: 0px;
-                border: 1px solid red;
-                box-sizing: border-box;
-            }
-        }
+        width: 41px;
+        height: 41px;
+        padding: 4px 4px 0 0;
+        margin: 0 -1px -1px 0;
     }
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.25;
+  }
+  &.current-date {
+      > div {
+          color: #2d6cb4;
+      }
+  }
+}
 </style>
