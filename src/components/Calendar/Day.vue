@@ -4,11 +4,12 @@
     :class="{
       active: isActive,
       select: isSelect,
-      'current-date': isCurrentDate
+      'current-date': isCurrentDate,
+      'another-month': typeCalendar
     }"
   >
     <div>
-        {{ date }}
+      {{ date }}
     </div>
   </td>
 </template>
@@ -25,6 +26,9 @@ export default {
     date: {
       type: Number,
       required: true
+    },
+    typeCalendar: {
+      type: String
     }
   },
   computed: {
@@ -87,33 +91,36 @@ export default {
 
 <style lang="scss" scoped>
 .day {
-  box-sizing: border-box;
-  vertical-align: middle;
-    border-collapse: collapse;
-    border-spacing: 0;
-    padding: 0;
-    margin: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  padding: 0;
+  margin: 0;
+  &.another-month {
     > div {
-        display: flex;
-        align-items: flex-start;
-        justify-content: flex-end;
-        font-size: 14px;
-        color: #444444;
-        border: 1px solid #D8D8D8;
-        background: #fff;
-        width: 41px;
-        height: 41px;
-        padding: 4px 4px 0 0;
-        margin: 0 -1px -1px 0;
+      display: none;
     }
+  }
+  > div {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    font-size: 14px;
+    color: #444444;
+    border: 1px solid #d8d8d8;
+    background: #fff;
+    width: 41px;
+    height: 41px;
+    padding: 4px 4px 0 0;
+    margin: 0 -1px -1px 0;
+  }
   &.disabled {
     pointer-events: none;
     opacity: 0.25;
   }
   &.current-date {
-      > div {
-          color: #2d6cb4;
-      }
+    > div {
+      color: #2d6cb4;
+    }
   }
 }
 </style>

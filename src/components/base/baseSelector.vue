@@ -4,7 +4,9 @@
     @click="visible = !visible"
     v-click-outside="clickOutside"
   >
-      <span v-if="typeSelect=='month'">{{ dates[selected].toLocaleString("ru-RU", { month: "long" }) }}</span>
+    <span v-if="typeSelect == 'month'">{{
+      dates[selected].toLocaleString("ru-RU", { month: "long" })
+    }}</span>
     {{ dates[selected].getFullYear() }}
 
     <ul class="selector-list" v-if="visible">
@@ -15,7 +17,9 @@
         :key="index"
         @click="value = index"
       >
-        <span v-if="typeSelect=='month'">{{ date.toLocaleString("ru-RU", { month: "long" }) }}</span>
+        <span v-if="typeSelect == 'month'">{{
+          date.toLocaleString("ru-RU", { month: "long" })
+        }}</span>
         {{ date.getFullYear() }}
       </li>
     </ul>
@@ -31,7 +35,7 @@ export default {
     typeSelect: {
       default: "month",
       type: String
-    },
+    }
   },
   computed: {
     ...mapState(["beginDate"]),
@@ -48,8 +52,7 @@ export default {
       let dates;
       if (this.typeSelect == "month") {
         dates = [...Array(24).keys()].map(
-          month =>
-            new Date(new Date().getFullYear(), 0 + month, 1)
+          month => new Date(new Date().getFullYear(), 0 + month, 1)
         );
       } else if (this.typeSelect == "year") {
         dates = [...Array(2).keys()].map(
@@ -64,7 +67,7 @@ export default {
       if (!this.lock) {
         this.setDateBy(this.dates[this.value]);
         this.$emit("input", this.dates[this.value]);
-          this.date = this.dates[this.value];
+        this.date = this.dates[this.value];
       }
     },
     async selected(value) {
@@ -76,13 +79,13 @@ export default {
     "$attrs.value": function(value) {
       this.value = value;
     },
-      typeSelect(val) {
-        if (val == "month") {
-            this.$emit("input", new Date());
-        } else if (val == "year") {
-            this.$emit("input", new Date(new Date().getFullYear(), 0, 1));
-        }
+    typeSelect(val) {
+      if (val == "month") {
+        this.$emit("input", new Date());
+      } else if (val == "year") {
+        this.$emit("input", new Date(new Date().getFullYear(), 0, 1));
       }
+    }
   },
   methods: {
     ...mapActions([

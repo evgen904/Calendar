@@ -13,14 +13,33 @@
         </tr>
 
         <tr v-for="(weeks, index) in days" :key="index">
-          <Day
-            :date="date"
-            :dateMonth="dateMonth"
-            v-if="date"
-            :key="date"
-            v-for="date in weeks"
-          />
-          <td v-else></td>
+          <template v-for="(date,wi) in weeks">
+            <Day
+              :date="date"
+              :dateMonth="dateMonth"
+              v-if="date"
+              :key="date"
+            />
+            <Day
+              v-else
+              typeCalendar="month"
+              :date="
+              new Date(
+                dateMonth.getFullYear(),
+                dateMonth.getMonth() + (index<2 ? -1 : 0),
+                (index<2 ? weeks.filter(a=>a).length-(7-wi) : weeks.filter(a=>a).length-wi)
+              ).getDate()
+              "
+              :dateMonth="new Date(
+                dateMonth.getFullYear(),
+                dateMonth.getMonth() + (index<2 ? -1 : +1),
+                1
+              )"
+            />
+          </template>
+          <!--<td v-else class="another-month">-->
+            <!--<div></div>-->
+          <!--</td>-->
         </tr>
       </table>
     </div>
@@ -84,34 +103,35 @@ export default {
 <style lang="scss" scoped>
 .month {
   margin-right: 20px;
-    margin-bottom: 30px;
+  margin-bottom: 30px;
   &:nth-child(4n) {
     margin-right: 0;
   }
-    &-title {
-        text-align: center;
-        color: #444444;
-        font-size: 17px;
-        margin-bottom: 16px;
-    }
+  &-title {
+    text-align: center;
+    color: #444444;
+    font-size: 17px;
+    margin-bottom: 16px;
+  }
   table {
-      border-collapse: collapse;
-      border: none;
-      border-spacing: 0;
-      padding: 0;
-      margin: 0;
+    border-collapse: collapse;
+    border: none;
+    border-spacing: 0;
+    padding: 0;
+    margin: 0;
     tr {
       th {
         font-weight: normal;
-          color: #444444;
-          font-size: 14px;
-          border-collapse: collapse;
-          border-spacing: 0;
-          padding: 0 0 6px;
-          margin: 0;
+        color: #444444;
+        font-size: 14px;
+        border-collapse: collapse;
+        border-spacing: 0;
+        padding: 0 4px 6px 0;
+        margin: 0;
+        text-align: right;
         &:nth-child(6),
         &:nth-child(7) {
-          color: #F51449;
+          color: #f51449;
         }
       }
     }
