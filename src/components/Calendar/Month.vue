@@ -24,11 +24,17 @@
               v-else
               typeCalendar="month"
               :date="
-              new Date(
-                dateMonth.getFullYear(),
-                dateMonth.getMonth() + (index<2 ? -1 : 0),
-                (index<2 ? weeks.filter(a=>a).length-(7-wi) : weeks.filter(a=>a).length-wi)
-              ).getDate()
+
+                (index<2) ?
+                  new Date(
+                    dateMonth.getFullYear(),
+                    dateMonth.getMonth() + (index<2 ? -1 : 0),
+                    weeks.filter(a=>a).length-(7-wi)
+                  ).getDate()
+                 : new Date(dateMonth.getFullYear(),dateMonth.getMonth()+1,wi)
+
+
+
               "
               :dateMonth="new Date(
                 dateMonth.getFullYear(),
@@ -40,6 +46,15 @@
           <!--<td v-else class="another-month">-->
             <!--<div></div>-->
           <!--</td>-->
+
+          <!--new Date(-->
+          <!--dateMonth.getFullYear(),-->
+          <!--dateMonth.getMonth() + (index<2 ? -1 : 0),-->
+          <!--(index<2 ? weeks.filter(a=>a).length-(7-wi) : weeks.filter(a=>a).length-wi)-->
+          <!--).getDate()-->
+
+
+
         </tr>
       </table>
     </div>

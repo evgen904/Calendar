@@ -1,41 +1,64 @@
 <template>
   <div id="app">
-    <div class="nav-top">
-      <div class="nav-top-left">
-        <button @click="prevStage" type="button" class="prev"></button>
-        <button @click="nextStage" type="button" class="next"></button>
-
-        <Selector :typeSelect="typeCalendar" v-model="beginDate" />
+    <div class="nav-bar-top" :class="typeCalendar">
+      <div class="object">
+        <button class="object-back">
+          <img src="./assets/ico-back.svg" alt="">
+        </button>
+        <div class="object-img">
+          <img src="./assets/img-object.jpg" alt="">
+        </div>
+        <div class="object-desc">
+          <div class="type">
+            1-комнатная квартира
+          </div>
+          <div class="address">
+            Псковская улица, 5к2
+          </div>
+        </div>
       </div>
-      <div class="nav-top-right">
-        <div class="price-mode">
-          Режим цен
-          <input type="checkbox" id="price-modal" />
-          <label for="price-modal"></label>
+      <div class="select-calendar">
+        <div class="nav-top">
+          <div class="nav-top-left">
+            <button @click="prevStage" type="button" class="prev"></button>
+            <button @click="nextStage" type="button" class="next"></button>
+
+            <Selector :typeSelect="typeCalendar" v-model="beginDate" />
+          </div>
+          <div class="nav-top-right">
+            <div class="price-mode">
+              Режим цен
+              <input type="checkbox" id="price-modal" />
+              <label for="price-modal"></label>
+            </div>
+            <div class="type-calendar">
+              <input
+                      type="radio"
+                      id="month"
+                      v-model="typeCalendar"
+                      name="type-calendar"
+                      value="month"
+              />
+              <label for="month">
+                Месяц
+              </label>
+              <input
+                      type="radio"
+                      checked
+                      id="year"
+                      v-model="typeCalendar"
+                      name="type-calendar"
+                      value="year"
+              />
+              <label for="year">
+                Год
+              </label>
+            </div>
+          </div>
         </div>
-        <div class="type-calendar">
-          <input
-            type="radio"
-            id="month"
-            v-model="typeCalendar"
-            name="type-calendar"
-            value="month"
-          />
-          <label for="month">
-            Месяц
-          </label>
-          <input
-            type="radio"
-            checked
-            id="year"
-            v-model="typeCalendar"
-            name="type-calendar"
-            value="year"
-          />
-          <label for="year">
-            Год
-          </label>
-        </div>
+      </div>
+      <div class="sync-setup">
+        <a href="#">Настройка синхронизации</a>
       </div>
     </div>
     <Calendar
@@ -104,6 +127,8 @@ export default {
     @import url('https://fonts.googleapis.com/css?family=PT+Sans:400,700');
 body {
   background: #f2f2f2;
+  padding: 0;
+  margin: 0;
 }
 #app {
   font-family: 'PT Sans', Arial, "Avenir", Helvetica, sans-serif;
@@ -115,10 +140,75 @@ body {
   }
 }
 
+.nav-bar-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: #EDEDED;
+  height: 76px;
+  margin-bottom: 20px;
+  &.year {
+    margin-bottom: 40px;
+  }
+  .object {
+    width: 320px;
+    background: #fff;
+    border-right: 1px solid #D8D8D8;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    &-back {
+      cursor: pointer;
+      width: 16px;
+      outline-style: none;
+      padding: 0;
+      margin: 0 24px 0 13px;
+      display: flex;
+      border: none;
+      background: none;
+    }
+    &-img {
+      width: 60px;
+      margin-right: 20px;
+      img {
+        vertical-align: top;
+      }
+    }
+    &-desc {
+      .type {
+        font-size: 16px;
+        color: #000000;
+        margin-bottom: 2px;
+      }
+      .address {
+        font-size: 14px;
+        color: #999999;
+      }
+    }
+  }
+  .select-calendar {
+    flex: auto;
+    padding: 0 20px;
+  }
+  .sync-setup {
+    width: 204px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #D8D8D8;
+    font-size: 14px;
+    a {
+      color: #2d6cb4;
+      text-decoration: none;
+    }
+  }
+}
+
+
 .nav-top {
   width: 100%;
-  max-width: 1180px;
-  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   &-left {
